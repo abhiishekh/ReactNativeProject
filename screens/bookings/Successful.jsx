@@ -4,8 +4,10 @@ import { AsseltImage, HeightSpacer, ReusableText, Reusablebtn } from '../../comp
 import { COLORS, SIZES, TEXT } from '../../constants/theme'
 import ReusableTile from '../../components/Reusable/ReusableTile'
 import { useRoute } from '@react-navigation/native'
+// import { useRoute } from '@react-navigation/native'
 
 const Successful = ({ navigation }) => {
+    
     const hotel =  {
         "_id": "64c675be3cfa5e847bcd5439",
         "country_id": "64c62bfc65af9f8c969a8d04",
@@ -62,7 +64,7 @@ const Successful = ({ navigation }) => {
                     <HeightSpacer height={20} />
 
 
-                    <ReusableTile item={hotel} />
+                    <ReusableTile item={item} />
 
                     <HeightSpacer height={40} />
 

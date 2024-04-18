@@ -11,7 +11,7 @@ import styles from './topTab.style';
 const Tab = createMaterialTopTabNavigator();
 
 
-const TopTab = () => {
+const TopTab = ({navigation}) => {
     return (
         <View style={{ flex: 1 }}>
             <View style={{ backgroundColor: COLORS.lightWhite }}>
@@ -32,7 +32,7 @@ const TopTab = () => {
                         icon={'logout'}
                         color1={COLORS.white}
 
-                        onPress1={() => { }}
+                        onPress1={()=> navigation.navigate('Home')}
                     />
 
                     <View style={styles.profile}>
@@ -72,7 +72,7 @@ const TopTab = () => {
             </View>
             <Tab.Navigator>
                 <Tab.Screen name='Bookings' component={TopBooking} />
-                <Tab.Screen name='Trips' component={TopTrips} />
+                {/* <Tab.Screen name='Trips' component={TopTrips} /> */}
                 <Tab.Screen name='Info' component={TopInfo} />
 
             </Tab.Navigator>

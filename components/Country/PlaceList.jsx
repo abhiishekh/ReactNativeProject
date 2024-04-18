@@ -3,19 +3,17 @@ import React from 'react'
 import ReusableTile from '../Reusable/ReusableTile'
 import { useNavigation } from '@react-navigation/native'
 
-
-const PopularList = ({data}) => {
-
+const PlaceList = ({data}) => {
+    
     const navigation = useNavigation();
     const renderItem=({item}) =>(
 
         <View style={{marginBottom:10}}>
-            <ReusableTile item={item} onPress={()=>navigation.navigate('HotelDetails', {item:item})}/>
+            <ReusableTile item={item} onPress={()=>navigation.navigate('PlaceDetails', {item:item})}/>
         </View>
     )
-
   return (
-   <FlatList
+    <FlatList
    data={data}
    scrollEnabled={false}
    showsVerticalScrollIndicator={false}
@@ -24,6 +22,6 @@ const PopularList = ({data}) => {
   )
 }
 
-export default PopularList
+export default PlaceList
 
 const styles = StyleSheet.create({})

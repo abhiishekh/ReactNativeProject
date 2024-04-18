@@ -8,8 +8,11 @@ import { DescriptionText, HeightSpacer, HotelMap, NetworkImage, ReusableText, Re
 import reusable from '../../components/Reusable/reusable.style'
 import { Rating } from 'react-native-stock-star-rating'
 import { Feather } from '@expo/vector-icons'
+import { useRoute } from '@react-navigation/native'
 
 const HotelDetails = ({ navigation }) => {
+  const route = useRoute();
+  const { item } = route.params;
   const hotel = {
     "availability": {
       "start": "2023-08-10T00:00:00.000Z",
@@ -72,19 +75,19 @@ const HotelDetails = ({ navigation }) => {
           top={50}
           left={20}
           right={20}
-          title={hotel.title}
+          title={item.title}
           color={COLORS.white}
           icon={'search1'}
           color1={COLORS.white}
           onPress={() => navigation.goBack()}
-          onPress1={() => { }}
+          onPress1={() => navigation.navigate("HotelSearch",{item:item})}
         />
       </View>
 
       <View>
         <View style={styles.container}>
           <NetworkImage
-            source={hotel.imageUrl}
+            source={item.imageUrl}
             width={"100%"}
             height={220}
             radius={25}
@@ -92,14 +95,14 @@ const HotelDetails = ({ navigation }) => {
           <View style={styles.titleConatiner}>
             <View style={styles.titleColumn}>
               <ReusableText
-                text={hotel.title}
+                text={item.title}
                 family="medium"
                 size={SIZES.xLarge}
                 color={COLORS.black}
               />
               <HeightSpacer height={10} />
               <ReusableText
-                text={hotel.location}
+                text={item.location}
                 family="medium"
                 size={SIZES.medium}
                 color={COLORS.black}
@@ -114,7 +117,7 @@ const HotelDetails = ({ navigation }) => {
                   color={'#FD9942'}
                 />
                 <ReusableText
-                  text={`(${hotel.review})`}
+                  text={`(${item.review})`}
                   family="medium"
                   size={SIZES.large}
                   color={COLORS.gray}
@@ -134,7 +137,7 @@ const HotelDetails = ({ navigation }) => {
 
           <HeightSpacer height={10} />
 
-          <DescriptionText text={hotel.description} />
+          <DescriptionText text={item.description} />
 
           <HeightSpacer height={10} />
 
@@ -148,7 +151,7 @@ const HotelDetails = ({ navigation }) => {
           <HeightSpacer height={10} />
 
           <ReusableText
-            text={hotel.location}
+            text={item.location}
             family="regular"
             size={SIZES.small+2}
             color={COLORS.gray}
@@ -168,14 +171,14 @@ const HotelDetails = ({ navigation }) => {
             </View>
 
             <HeightSpacer height={10}/>
-            <ReviewList reviews={hotel.reviews}/>
+            <ReviewList reviews={item.reviews}/>
 
 
         </View>
           <View style={[reusable.rowWithSpace('space-between'),styles.bottom]}>
           <View>
           <ReusableText
-            text={`\₹ ${hotel.price}`}
+            text={`\₹ ${item.price}`}
             family="medium"
             size={SIZES.medium}
             color={COLORS.black}
@@ -192,7 +195,7 @@ const HotelDetails = ({ navigation }) => {
 
           </View>
           <Reusablebtn
-                        onPress={() => navigation.navigate("SelectRoom")}
+                        onPress={() => navigation.navigate("SelectRoom",{item:item})}
                         btnText={"Select Room"}
                         width={(SIZES.width - 40)/2.2}
                         backgroundColor={COLORS.green}

@@ -47,7 +47,7 @@ const BottomTabNavigation = () => {
             }
         }
         />
-        <Tab.Screen 
+        {/* <Tab.Screen 
         name='Loaction' component={Location} options={
             {
                 tabBarStyle: tabBarStyle,
@@ -62,7 +62,7 @@ const BottomTabNavigation = () => {
                 )
             }
         }
-        />
+        /> */}
         <Tab.Screen 
         name='Chat' component={AuthTopTab} options={
             {

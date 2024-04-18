@@ -7,9 +7,12 @@ import reusable from '../../components/Reusable/reusable.style';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 import PopularList from '../../components/Country/PopularList';
+import { useRoute } from '@react-navigation/native'
 
 const PlaceDetails = () => {
     const navigation = useNavigation(); // Get navigation from useNavigation hook
+    const route = useRoute();
+    const { item } = route.params;
 
     const place = {
 
@@ -49,7 +52,7 @@ const PlaceDetails = () => {
         <ScrollView>
             <View>
                 <NetworkImage
-                    source={place.imageUrl}
+                    source={item.imageUrl}
                     width={"100%"}
                     height={450}
                     radius={30}
@@ -59,10 +62,10 @@ const PlaceDetails = () => {
                     top={40}
                     left={20}
                     right={20}
-                    title={place.title}
+                    title={item.title}
                     color={COLORS.white}
-                    icon={'search1'}
-                    color1={COLORS.white}
+                    // icon={'search1'}
+                    // color1={COLORS.white}
                     onPress={() => navigation.goBack()}
                     onPress1={() => { }}
                 />
@@ -71,13 +74,13 @@ const PlaceDetails = () => {
             <View style={styles.description}>
                 <HeightSpacer height={15} />
                 <ReusableText
-                    text={place.location}
+                    text={item.location}
                     family="medium"
                     size={TEXT.medium}
                     color={COLORS.black}
                 />
 
-                <DescriptionText text={place.description} />
+                <DescriptionText text={item.description} />
 
                 <View style={{ alignContent: "center" }}>
                     <HeightSpacer height={20} />
@@ -90,14 +93,14 @@ const PlaceDetails = () => {
                         />
 
                         <TouchableOpacity onPress={() => { }}>
-                            <Feather name='list' size={20} />
+                            {/* <Feather name='list' size={20} /> */}
                         </TouchableOpacity>
                     </View>
                     <HeightSpacer height={20} />
-                    <PopularList data={place.popular}/>
+                    <PopularList data={item.popular}/>
                     <HeightSpacer height={10} />
                     <Reusablebtn
-                        onPress={() => navigation.navigate("HotelSearch")}
+                        onPress={() => navigation.navigate("HotelSearch",{item})}
                         btnText={"Find the best Hotels"}
                         width={(SIZES.width - 40)}
                         backgroundColor={COLORS.green}

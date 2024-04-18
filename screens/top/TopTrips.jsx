@@ -43,7 +43,7 @@ const TopTrips = ({navigation}) => {
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => (
         <View style={{marginBottom:10}}>
-          <ReusableTile item={item} onPress={()=>navigation.navigate('PlaceDetails',item._id)}/>
+          <ReusableTile item={item} onPress={()=>navigation.navigate('PlaceDetails',{item:item})}/>
           </View>
       )}
     />

@@ -1,19 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { useRoute } from '@react-navigation/native'
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import AppBar from '../../components/Reusable/AppBar';
 import { COLORS, SIZES } from '../../constants/theme';
+import { AsseltImage, NetworkImage, ReusableText,HeightSpacer } from '../../components';
 import reusable from '../../components/Reusable/reusable.style';
-import { AsseltImage, Counter, HeightSpacer, NetworkImage, Rating, ReusableText, Reusablebtn, WidthSpacer } from '../../components';
-
-
 
 const SelectedRoom = ({ navigation }) => {
+    const route = useRoute();
+    const { item } = route.params;
+    const [guests, setGuests] = useState(1);
+    const [totalPrice, setTotalPrice] = useState(item.price * guests);
 
-
-    const router = useRoute();
-    const { item } = router.params;
-    // console.log(item)
+    useEffect(() => {
+        setTotalPrice(item.price * guests);
+    }, [guests, item.price]);
 
     return (
         <View>
@@ -24,13 +25,9 @@ const SelectedRoom = ({ navigation }) => {
                     right={20}
                     title={item.title}
                     color={COLORS.white}
-
                     onPress={() => navigation.goBack()}
-
                 />
-
             </View>
-
             <View style={{ marginHorizontal: 20 }}>
                 <View style={{ backgroundColor: COLORS.lightWhite, borderRadius: 16 }}>
                     <NetworkImage
@@ -39,121 +36,117 @@ const SelectedRoom = ({ navigation }) => {
                         height={200}
                         radius={20}
                     />
-
-                    <HeightSpacer height={20} />
-
-                    <View style={{ marginHorizontal: 10 }}>
-                        <View style={reusable.rowWithSpace('space-between')}>
-                            <ReusableText
-                                text={item.title}
-                                family="medium"
-                                size={SIZES.medium}
-                                color={COLORS.dark}
-                            />
-                            <View style={reusable.rowWithSpace('flex-start')}>
-                                <Rating rating={item.rating} />
-                                <WidthSpacer width={10} />
-                                <ReusableText
-                                    text={`(${item.review})`}
-                                    family="regular"
-                                    size={SIZES.medium}
-                                    color={COLORS.gray}
-                                />
-                            </View>
-                        </View>
-                        <HeightSpacer height={10} />
+                    <View style={{ margin: 10 }}>
                         <ReusableText
-                            text={item.location}
+                            text={item.title}
                             family="medium"
                             size={SIZES.medium}
-                            color={COLORS.gray}
+                            color={COLORS.dark}
                         />
-
-                        <View style={{ borderWidth: 0.5, borderColor: COLORS.lightGrey, marginVertical: 15 }}>
-
-                        </View>
-
-                        <ReusableText
-                            text={"Room Requirements"}
-                            family="regular"
-                            size={SIZES.medium}
-                            color={COLORS.black}
-                        />
-
-
-                        <HeightSpacer height={30} />
                         <View style={reusable.rowWithSpace('space-between')}>
-
-
                             <ReusableText
-                                text={"Price per night"}
+                                text={"Price per night:"}
                                 family="regular"
                                 size={SIZES.medium}
                                 color={COLORS.black}
                             />
                             <ReusableText
-                                text={`\₹ ${500}`}
+                                text={`₹ ${item.price}`}
                                 family="regular"
                                 size={SIZES.medium}
                                 color={COLORS.black}
                             />
                         </View>
+                        <View style={reusable.rowWithSpace('space-between')}>
+                            {/* <ReusableText
+                                text={"Number of Guests"}
+                                family="regular"
+                                size={SIZES.medium}
+                                color={COLORS.black}
+                            /> */}
+                            {/* <View style={reusable.rowWithSpace('flex-start')}>
+                                <TouchableOpacity onPress={() => setGuests(guests - 1)}>
+                                    <AsseltImage mode={"contain"} width={20} height={20} data={require('../../assets/images/minus.png')} />
+                                </TouchableOpacity>
+                                <ReusableText
+                                    text={guests.toString()}
+                                    family="regular"
+                                    size={SIZES.medium}
+                                    color={COLORS.black}
+                                    style={{ marginHorizontal: 10 }}
+                                />
+                                <TouchableOpacity onPress={() => setGuests(guests + 1)}>
+                                    <AsseltImage mode={"contain"} width={20} height={20} data={require('../../assets/images/plus.png')} />
+                                </TouchableOpacity>
+                            </View> */}
+                        </View>
+                        {/* <View style={reusable.rowWithSpace('space-between')}>
+                            <ReusableText
+                                text={"Total Price"}
+                                family="regular"
+                                size={SIZES.medium}
+                                color={COLORS.black}
+                            />
+                            <ReusableText
+                                text={`\₹ ${totalPrice}`}
+                                family="regular"
+                                size={SIZES.medium}
+                                color={COLORS.black}
+                            />
+                        </View> */}
                         <HeightSpacer height={15} />
-
-                        <View style={reusable.rowWithSpace('space-between')}>
-
-
+                        <View style={[reusable.rowWithSpace('space-between'), { alignItems: 'center' }]}>
                             <ReusableText
                                 text={"Payment Method"}
                                 family="regular"
                                 size={SIZES.medium}
                                 color={COLORS.black}
                             />
-                            <View style={reusable.rowWithSpace('flex-start')}>
-
-                                <AsseltImage mode={"contain"} width={30} height={20} 
-                                data={require('../../assets/images/PayPal.png')}/>
-
-                                <ReusableText
-                                    text={"PayPal"}
-                                    family="regular"
-                                    size={SIZES.medium}
-                                    color={COLORS.black}
-                                />
+                            <View style={reusable.rowWithSpace('flex-end')}>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate("BookHotel", { item, guests, totalPrice, paymentMethod: 'UPI' })}
+                                    style={[styles.paymentButton, { backgroundColor: COLORS.lightGreen }]}
+                                >
+                                    {/* <AsseltImage mode={"contain"} width={30} height={20} data={require('../../assets/images/upi.png')} /> */}
+                                    <ReusableText
+                                        text={"UPI"}
+                                        family="regular"
+                                        size={SIZES.medium}
+                                        color={COLORS.black}
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate("Successful", { item, guests, totalPrice, paymentMethod: 'Self Checking' })}
+                                    style={[styles.paymentButton, { backgroundColor: COLORS.lightBlue }]}
+                                >
+                                    {/* <AsseltImage mode={"contain"} width={30} height={20} data={require('../../assets/images/self-checking.png')} /> */}
+                                    <ReusableText
+                                        text={"Self Checking"}
+                                        family="regular"
+                                        size={SIZES.medium}
+                                        color={COLORS.black}
+                                    />
+                                </TouchableOpacity>
                             </View>
                         </View>
-                        <HeightSpacer height={15} />
-                        <View style={reusable.rowWithSpace('space-between')}>
-                            <ReusableText
-                                text={"4 Guest"}
-                                family="regular"
-                                size={SIZES.medium}
-                                color={COLORS.black}
-                            />
-
-                            <Counter />
-                        </View>
-
-
-                        <HeightSpacer height={15} />
-                        <Reusablebtn
-                            onPress={() => navigation.navigate("Successful",item)}
-                            btnText={"Book Now"}
-                            width={(SIZES.width - 50)}
-                            backgroundColor={COLORS.green}
-                            borderColor={COLORS.green}
-                            borderWidth={0}
-                            textColor={COLORS.white}
-                        />
-
-                        <HeightSpacer height={30} />
                     </View>
                 </View>
             </View>
         </View>
-    )
+    );
 }
 
-export default SelectedRoom
+export default SelectedRoom;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    paymentButton: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: COLORS.gray,
+        marginRight: 10,
+    },
+});

@@ -1,4 +1,4 @@
-import { TextInput, Text, View, TouchableOpacity } from 'react-native'
+import { TextInput, Text, View, TouchableOpacity, Modal } from 'react-native'
 import React, { useState } from 'react'
 import styles from './signin.style'
 import { Formik } from 'formik'
@@ -11,7 +11,7 @@ const validationSchema = Yup.object().shape({
     password: Yup.string()
         .min(8, "Password must be at least 8 characters")
         .required('Required'),
-        username: Yup.string()
+    username: Yup.string()
         .min(3, "Username must be at least 3 characters")
         .required('Required'),
     email: Yup.string()
@@ -19,20 +19,26 @@ const validationSchema = Yup.object().shape({
         .required('Required')
 })
 
-const Registration = () => {
+const Registration = ({navigation}) => {
 
     const [loader, setLoader] = useState(false)
     const [responseData, setresponseData] = useState(null)
     const [obsecureText, setobsecureText] = useState(false)
+    const [showConfirmation, setShowConfirmation] = useState(false)
 
+    const handleRegister = () => {
+        console.log("Register button clicked"); // Check if the function is called
+        setShowConfirmation(true);
+    }
 
-  return (
-     <View style={styles.container}>
+    return (
+        <View style={styles.container}>
             <Formik
                 initialValues={{ email: "", password: "" }}
                 validationSchema={validationSchema}
-                onSubmit={(values) => { 
-                    // console.log(values); // Print values to the console
+                onSubmit={(values) => {
+                    console.log("Form submitted"); // Check if the form is submitted
+                    handleRegister();
                 }}
             >
                 {({
@@ -155,7 +161,6 @@ const Registration = () => {
 
                         <Reusablebtn
                             onPress={handleSubmit}
-                            
                             btnText={"REGISTER"}
                             width={(SIZES.width - 40)}
                             backgroundColor={COLORS.green}
@@ -166,9 +171,33 @@ const Registration = () => {
                     </View>
                 )}
             </Formik>
+
+            {/* Confirmation Popup */}
+            <Modal
+    visible={showConfirmation}
+    animationType="slide"
+    transparent={true}
+    onRequestClose={() => setShowConfirmation(false)}
+>
+    <View style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+            <Text style={styles.confirmationText}>
+                We will send you an email confirmation link shortly to verify you. After that, you can login to your account and add places, hotels and reviews.
+            </Text>
+            <TouchableOpacity
+                style={styles.closeButton}
+                onPress={()=> navigation.navigate('Home')}
+            >
+                <Text style={styles.closeButtonText}>Home</Text>
+            </TouchableOpacity>
         </View>
-  )
+    </View>
+</Modal>
+
+        </View>
+    )
 }
 
 export default Registration
+
 
