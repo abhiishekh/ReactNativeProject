@@ -12,6 +12,7 @@ import home from './screens/home/Home'
 import BookHotel from './screens/bookings/BookHotel';
 
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -53,6 +54,8 @@ export default function App() {
         <Stack.Screen name='Successful' component={Successful} options={{ headerShown: false }} />
         <Stack.Screen name='Failed' component={Failed} options={{ headerShown: false }} />
         <Stack.Screen name='BookHotel' component={BookHotel} options={{ headerShown: false }} />
+        
+
         {/* <Stack.Screen name='TopInfo' component={TopInfo} options={{ headerShown: false }} /> */}
 
 

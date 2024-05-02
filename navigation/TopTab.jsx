@@ -72,8 +72,9 @@ const TopTab = ({navigation}) => {
             </View>
             <Tab.Navigator>
                 <Tab.Screen name='Bookings' component={TopBooking} />
-                {/* <Tab.Screen name='Trips' component={TopTrips} /> */}
-                <Tab.Screen name='Info' component={TopInfo} />
+                <Tab.Screen name='Myplaces' component={TopTrips} />
+                {/* <Tab.Screen name='Info' component={TopInfo} /> */}
+                {/* <Tab.Screen name='MyPlaces' component={MyPlaces}/> */}
 
             </Tab.Navigator>
         </View>
